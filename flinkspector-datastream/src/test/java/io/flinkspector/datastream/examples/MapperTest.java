@@ -18,6 +18,7 @@ package io.flinkspector.datastream.examples;
 
 import io.flinkspector.core.collection.ExpectedRecords;
 import io.flinkspector.datastream.DataStreamTestBase;
+import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -57,21 +58,18 @@ public class MapperTest extends DataStreamTestBase {
 		 * Add data records to it and retrieve a DataStreamSource
 		 * by calling .complete().
 		 */
-        DataStream<Tuple2<Integer, String>> stream =
-                createTestStreamWith(Tuple2.of(1, "test"))
-                        .emit(Tuple2.of(2, "foo"))
-                        .emit(Tuple2.of(3, "bar"))
+        DataStream<String> stream =
+                createTestStreamWith("hllo")
                         .close();
 
 		/*
 		 * Define the output you expect from the the transformation under test.
 		 * Add the tuples you want to see with .expect(record).
 		 */
-        ExpectedRecords<Tuple2<String, Integer>> expectedRecords = new ExpectedRecords<Tuple2<String, Integer>>()
-                .expect(Tuple2.of("test", 1))
-                .expect(Tuple2.of("foo", 2));
+        ExpectedRecords<String> expectedRecords = new ExpectedRecords<String>()
+                .expect("hello");
         // refine your expectations by adding requirements
-        expectedRecords.refine().sameFrequency().inOrder(notStrict).all();
+        expectedRecords.refine().only();
 
 		/*
 		 * Use assertStream to map DataStream to an OutputMatcher.
@@ -81,7 +79,13 @@ public class MapperTest extends DataStreamTestBase {
 		 * assertStream(swap(stream), and(expectedRecords,outputWithSize(3))
 		 * would additionally assert that the number of produced records is exactly 3.
 		 */
-        assertStream(swap(stream), expectedRecords);
+        assertStream(stream.filter(new FilterFunction<String>() {
+            @Override
+            public boolean filter(String value) throws Exception {
+                return true;
+            }
+        }), expectedRecords);
 
     }
+
 }

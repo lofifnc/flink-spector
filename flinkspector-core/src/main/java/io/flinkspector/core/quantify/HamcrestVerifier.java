@@ -23,6 +23,8 @@ import org.junit.Assert;
 
 import java.util.List;
 
+import static sun.misc.Version.println;
+
 public class HamcrestVerifier<T> extends SimpleOutputVerifier<T> {
 
     private final Matcher<? super Iterable<T>> matcher;
@@ -37,6 +39,17 @@ public class HamcrestVerifier<T> extends SimpleOutputVerifier<T> {
 
     @Override
     public void verify(List<T> output) throws FlinkTestFailedException {
-        Assert.assertThat(output, matcher);
+        System.out.println("testing");
+        System.out.println("output = " + output);
+
+            if(output.size() < 1) {
+                System.out.println("size is small");
+                throw new AssertionError("output too small");
+            } else {
+                throw new AssertionError("output too big");
+            }
+//            Assert.assertThat(output, matcher);
+
+//        System.out.println("testing stop");
     }
 }

@@ -303,6 +303,7 @@ public class DataStreamTestBase {
         try {
             testEnv.executeTest();
         } catch (AssertionError assertionError) {
+            System.out.println(assertionError.getMessage());
 
 //			TODO: find a better way to flag internal errors
 //			if (testEnv.hasBeenStopped()) {
