@@ -59,7 +59,7 @@ public class MapperTest extends DataStreamTestBase {
 		 * by calling .complete().
 		 */
         DataStream<String> stream =
-                createTestStreamWith("hllo")
+                createTimedTestStreamWith("hllo")
                         .close();
 
 		/*
@@ -82,7 +82,7 @@ public class MapperTest extends DataStreamTestBase {
         assertStream(stream.filter(new FilterFunction<String>() {
             @Override
             public boolean filter(String value) throws Exception {
-                return true;
+                return false;
             }
         }), expectedRecords);
 

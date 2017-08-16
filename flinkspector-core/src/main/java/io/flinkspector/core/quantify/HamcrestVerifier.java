@@ -42,12 +42,8 @@ public class HamcrestVerifier<T> extends SimpleOutputVerifier<T> {
         System.out.println("testing");
         System.out.println("output = " + output);
 
-            if(output.size() < 1) {
-                System.out.println("size is small");
-                throw new AssertionError("output too small");
-            } else {
-                throw new AssertionError("output too big");
-            }
+        throw new AssertionError("i dont like the output");
+
 //            Assert.assertThat(output, matcher);
 
 //        System.out.println("testing stop");
