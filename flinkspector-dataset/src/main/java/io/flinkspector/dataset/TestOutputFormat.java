@@ -44,8 +44,14 @@ public class TestOutputFormat<IN> extends RichOutputFormat<IN> {
     private Logger LOG = LoggerFactory.getLogger(RichOutputFormat.class);
 
     public TestOutputFormat(int instance, RingBuffer<OutputEvent> ringBuffer) {
-        this.ringBuffer = ringBuffer;
+        TestOutputFormat.ringBuffer = ringBuffer;
         this.instance = instance;
+    }
+
+    public TestOutputFormat(int instance, RingBuffer<OutputEvent> ringBuffer, TypeSerializer<IN> serializer) {
+        TestOutputFormat.ringBuffer = ringBuffer;
+        this.instance = instance;
+        this.serializer = serializer;
     }
 
     @Override

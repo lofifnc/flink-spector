@@ -54,6 +54,12 @@ public class TestSink<IN> extends RichSinkFunction<IN> {
         TestSink.buffer = buffer;
     }
 
+    public TestSink(int instance, RingBuffer<OutputEvent> buffer, TypeSerializer<IN> serializer) {
+        this.serializer = serializer;
+        this.instance = instance;
+        TestSink.buffer = buffer;
+    }
+
 
     @Override
     public void open(Configuration configuration) throws UnknownHostException {

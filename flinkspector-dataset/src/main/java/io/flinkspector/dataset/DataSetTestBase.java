@@ -148,6 +148,7 @@ public class DataSetTestBase {
     public <T> void assertDataSet(DataSet<T> dataSet,
                                   Matcher<Iterable<T>> matcher,
                                   VerifyFinishedTrigger trigger) {
+
         dataSet.output(createTestOutputFormat(matcher, trigger));
     }
 
